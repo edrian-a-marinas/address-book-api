@@ -2,6 +2,21 @@
 
 A minimal REST API built with FastAPI for managing addresses with coordinate support and distance-based search.
 
+---
+
+## Highlights
+
+Beyond the core requirements, a few things worth calling out:
+
+- **Logging at every meaningful event** — each route logs on entry, and services log on success, failure, and not-found cases with appropriate severity (`INFO`, `WARNING`, `ERROR`). Failures also trigger a `db.rollback()` before re-raising.
+- **Coordinate validation in Pydantic schemas** — latitude/longitude bounds and empty-string checks are enforced in `AddressCreate` and `AddressUpdate` via `@field_validator`, so invalid data is rejected before it touches the database.
+- **Geopy for geodesic distance** — uses a well-tested library instead of a hand-rolled formula.
+- **Partial updates handled correctly** — `AddressUpdate` uses `exclude_unset=True`, so only fields explicitly provided in the request body are applied.
+- **Containerized + tested** — Docker support and 16 passing tests covering CRUD and nearby search.
+- **Type hints throughout**, ORM-based DB access, externalized config, and a clean project structure.
+
+---
+
 ## Getting Started
 
 ### 1. Clone the repository
@@ -89,6 +104,29 @@ pytest tests/ -v
 }
 ```
 
+### `GET /api/v1/addresses/{id}`
+
+Returns the address matching the given ID.
+
+```json
+{
+  "id": 1,
+  "street": "123 Main St",
+  "city": "Quezon City",
+  "country": "Philippines",
+  "latitude": 14.5995,
+  "longitude": 120.9842
+}
+```
+
+### `GET /api/v1/addresses/nearby`
+
+| Parameter | Value |
+|-----------|-------|
+| `latitude` | `14.5995` |
+| `longitude` | `120.9842` |
+| `distance_km` | `10` |
+
 ### `PUT /api/v1/addresses/{id}`
 
 ```json
@@ -104,14 +142,6 @@ pytest tests/ -v
 ### `DELETE /api/v1/addresses/{id}`
 
 Returns `204 No Content` on success.
-
-### `GET /api/v1/addresses/nearby`
-
-| Parameter | Value |
-|-----------|-------|
-| `latitude` | `14.5995` |
-| `longitude` | `120.9842` |
-| `distance_km` | `10` |
 
 ---
 
