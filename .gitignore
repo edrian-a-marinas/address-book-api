@@ -4,9 +4,12 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Virtual environment
+venv/
+
 # Database
-#*.db
+*.db
 
-# Environment - commented because needed for assessment 
-#.env     
-
+# IDE
+.vscode/
+.idea/
