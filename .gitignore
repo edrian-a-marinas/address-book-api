@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+#*.db
+
+# Environment - commented because needed for assessment 
+#.env     
+
