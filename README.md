@@ -26,18 +26,12 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-A `.env` file is included in this repository for assessment purposes only, so reviewers can run the project immediately without any additional setup.
-
-> **Note:** In a real production setup, `.env` should never be committed to version control. It would be listed in `.gitignore` and provisioned separately per environment.
-
-The included `.env`:
+A `.env` file is included for assessment purposes only — in production, this should never be committed.
 
 ```env
 DATABASE_URL=sqlite:///./address_book.db
-DEBUG=True
+DEBUG=True  # enables Swagger UI at /docs
 ```
-
-> `DEBUG=True` enables the Swagger UI at `http://127.0.0.1:8000/docs`. Set to `False` in production to disable it.
 
 ### 5. Run the application
 
@@ -45,27 +39,27 @@ DEBUG=True
 uvicorn app.main:app --reload
 ```
 
+Open `http://127.0.0.1:8000/docs`.
+
 ---
 
-## Running with Docker
+## Docker
 
 ```bash
 docker build -t address-book-api .
 docker run -p 8000:8000 -e DEBUG=True address-book-api
 ```
 
-Then open `http://localhost:8000/docs`.
-
 ---
 
-## Running Tests
+## Tests
 
 ```bash
 pip install -r requirements-dev.txt
 pytest tests/ -v
 ```
 
-All 16 tests should pass covering CRUD operations and nearby address search.
+16 tests covering CRUD and nearby search.
 
 ---
 
@@ -81,16 +75,9 @@ All 16 tests should pass covering CRUD operations and nearby address search.
 
 ---
 
-## Example Usage
+## Example Payloads
 
-Use the built-in Swagger UI at `http://127.0.0.1:8000/docs` to interact with the API directly — no external tools needed.
-
-1. Click on any endpoint to expand it
-2. Click **"Try it out"**
-3. Fill in the request body or parameters
-4. Click **"Execute"**
-
-### Create an address — `POST /api/v1/addresses/`
+### `POST /api/v1/addresses/`
 
 ```json
 {
@@ -102,11 +89,7 @@ Use the built-in Swagger UI at `http://127.0.0.1:8000/docs` to interact with the
 }
 ```
 
-### Get address by ID — `GET /api/v1/addresses/{id}`
-
-Set `id` to `1` to retrieve the address created above.
-
-### Update an address — `PUT /api/v1/addresses/{id}`
+### `PUT /api/v1/addresses/{id}`
 
 ```json
 {
@@ -118,19 +101,17 @@ Set `id` to `1` to retrieve the address created above.
 }
 ```
 
-### Delete an address — `DELETE /api/v1/addresses/{id}`
+### `DELETE /api/v1/addresses/{id}`
 
-Set `id` to the address you want to remove. Returns `204 No Content` on success.
+Returns `204 No Content` on success.
 
-### Get nearby addresses — `GET /api/v1/addresses/nearby`
+### `GET /api/v1/addresses/nearby`
 
 | Parameter | Value |
 |-----------|-------|
 | `latitude` | `14.5995` |
 | `longitude` | `120.9842` |
 | `distance_km` | `10` |
-
-Returns all addresses within 10km of the given coordinates.
 
 ---
 
@@ -139,17 +120,16 @@ Returns all addresses within 10km of the given coordinates.
 ```
 address-book-api/
 ├── app/
-│   ├── main.py        # FastAPI app entry point
+│   ├── main.py        # Entry point
 │   ├── routes.py      # Route handlers
 │   ├── services.py    # Business logic
-│   ├── models.py      # SQLAlchemy ORM models
-│   ├── schemas.py     # Pydantic request/response schemas
-│   └── database.py    # Database connection and session
+│   ├── models.py      # ORM models
+│   ├── schemas.py     # Pydantic schemas
+│   └── database.py    # DB connection and session
 ├── tests/
-│   ├── conftest.py    # Shared fixtures (client, db setup, sample data)
-│   └── test_addresses.py  # Tests for all endpoints
-├── .env               # Included for assessment purposes only
-├── .gitignore
+│   ├── conftest.py    # Fixtures
+│   └── test_addresses.py
+├── .env
 ├── Dockerfile
 ├── pytest.ini
 ├── requirements.txt
@@ -163,9 +143,8 @@ address-book-api/
 
 - **[FastAPI](https://fastapi.tiangolo.com/)** — Web framework
 - **[SQLAlchemy](https://www.sqlalchemy.org/)** — ORM
-- **[SQLite](https://www.sqlite.org/)** — Database
-- **[Pydantic](https://docs.pydantic.dev/)** — Data validation
-- **[Geopy](https://geopy.readthedocs.io/)** — Geodesic distance calculation
-- **[python-dotenv](https://pypi.org/project/python-dotenv/)** — Environment variable management
+- **[Pydantic](https://docs.pydantic.dev/)** — Validation
+- **[Geopy](https://geopy.readthedocs.io/)** — Geodesic distance
+- **[python-dotenv](https://pypi.org/project/python-dotenv/)** — Config
 - **[Docker](https://www.docker.com/)** — Containerization
 - **[pytest](https://docs.pytest.org/)** — Testing
