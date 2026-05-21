@@ -41,7 +41,11 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-A `.env` file is included for assessment purposes only — in production, this should never be committed.
+Copy the example environment file and edit as needed:
+
+```bash
+cp .env.example .env
+```
 
 ```env
 DATABASE_URL=sqlite:///./address_book.db
@@ -159,7 +163,7 @@ address-book-api/
 ├── tests/
 │   ├── conftest.py    # Fixtures
 │   └── test_addresses.py
-├── .env
+├── .env.example
 ├── Dockerfile
 ├── pytest.ini
 ├── requirements.txt
