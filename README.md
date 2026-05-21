@@ -22,12 +22,19 @@ Beyond the core requirements, a few things worth calling out:
 ### 1. Clone the repository
 
 ```bash
-git clone git@github.com:edrian-a-marinas/address-book-api.git
+git clone https://github.com/edrian-a-marinas/address-book-api.git
 cd address-book-api
 ```
 
 ### 2. Create and activate a virtual environment
 
+**Windows:**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+**macOS/Linux:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -41,8 +48,12 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Copy the example environment file and edit as needed:
+**Windows:**
+```bash
+copy .env.example .env
+```
 
+**macOS/Linux:**
 ```bash
 cp .env.example .env
 ```
@@ -64,10 +75,46 @@ Open `http://127.0.0.1:8000/docs`.
 
 ## Docker
 
+> Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows/macOS) or Docker Engine (Linux).
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/edrian-a-marinas/address-book-api.git
+cd address-book-api
+```
+
+### 2. Copy the environment file
+
+**Windows:**
+```bash
+copy .env.example .env
+```
+
+**macOS/Linux:**
+```bash
+cp .env.example .env
+```
+
+### 3. Build the image
+
 ```bash
 docker build -t address-book-api .
+```
+
+### 4. Run the container
+
+```bash
 docker run -p 8000:8000 -e DEBUG=True address-book-api
 ```
+
+Open `http://127.0.0.1:8000/docs`.
+
+> If port 8000 is already in use, map to a different host port:
+> ```bash
+> docker run -p 8001:8000 -e DEBUG=True address-book-api
+> ```
+> Then open `http://127.0.0.1:8001/docs`.
 
 ---
 
