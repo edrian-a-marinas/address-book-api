@@ -13,3 +13,4 @@ venv/
 # IDE
 .vscode/
 .idea/.pytest_cache/
+.env
