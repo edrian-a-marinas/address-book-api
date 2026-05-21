@@ -87,10 +87,10 @@ pytest tests/ -v
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/api/v1/addresses/` | Create a new address |
-| `GET` | `/api/v1/addresses/{id}` | Get address by ID |
-| `PUT` | `/api/v1/addresses/{id}` | Update an address |
-| `DELETE` | `/api/v1/addresses/{id}` | Delete an address |
 | `GET` | `/api/v1/addresses/nearby` | Get addresses within a given distance |
+| `GET` | `/api/v1/addresses/{address_id}` | Get address by ID |
+| `PUT` | `/api/v1/addresses/{address_id}` | Update an address |
+| `DELETE` | `/api/v1/addresses/{address_id}` | Delete an address |
 
 ---
 
@@ -108,20 +108,7 @@ pytest tests/ -v
 }
 ```
 
-### `GET /api/v1/addresses/{id}`
-
-Returns the address matching the given ID.
-
-```json
-{
-  "id": 1,
-  "street": "123 Main St",
-  "city": "Quezon City",
-  "country": "Philippines",
-  "latitude": 14.5995,
-  "longitude": 120.9842
-}
-```
+---
 
 ### `GET /api/v1/addresses/nearby`
 
@@ -131,7 +118,17 @@ Returns the address matching the given ID.
 | `longitude` | `120.9842` |
 | `distance_km` | `10` |
 
-### `PUT /api/v1/addresses/{id}`
+---
+
+### `GET /api/v1/addresses/{address_id}`
+
+Provide the `address_id` of the address you want to retrieve (e.g. `1`).
+
+---
+
+### `PUT /api/v1/addresses/{address_id}`
+
+Provide the `address_id` and any fields you want to update:
 
 ```json
 {
@@ -143,9 +140,11 @@ Returns the address matching the given ID.
 }
 ```
 
-### `DELETE /api/v1/addresses/{id}`
+---
 
-Returns `204 No Content` on success.
+### `DELETE /api/v1/addresses/{address_id}`
+
+Provide the `address_id` of the address to delete. Returns `204 No Content` on success.
 
 ---
 
